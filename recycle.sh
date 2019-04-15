@@ -9,12 +9,24 @@ do
     esac
 done
 
+trashpath=~/trash/
 
+if [ ! -d "$trashpath" ]; then
+     mkdir -p $trashpath
+     chmod ugo+rwx $trashpath
+fi
 
 if [ "$rmfile" ]; then
-    mv $2 /Users/Tom/Development/M3/recycleBin/trash
+    if [ ! -d "$trashpath" ]; then
+	mkdir -p $trashpath
+    chmod ugo+rwx $trashpath
+fi
+    mv $2 $trashpath
 fi
 
 if [ "$restore" ]; then
+    echo "Where would you like to save this file?"
+    read location
+    mv -i $filename $location/$filename
 
-
+fi
