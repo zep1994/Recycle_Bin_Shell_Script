@@ -27,6 +27,5 @@ fi
 if [ "$restore" ]; then
     echo "Where would you like to save this file?"
     read location
-    mv -i $filename $location/$filename
-
+    mv  $2 $location
 fi
