@@ -5,7 +5,7 @@ do
     case $d in
         c) rmfile="$OPTARG" ;;
         r) restore=$OPTARG ;;
-        e) empty;;
+        e) empty=true ;;
     esac
 done
 
@@ -28,4 +28,8 @@ if [ "$restore" ]; then
     echo "Where would you like to save this file?"
     read location
     mv  $2 $location
+fi
+
+if [ "$empty" ]; then
+    shred -u ~/trash/*
 fi
