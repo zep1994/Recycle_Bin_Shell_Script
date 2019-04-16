@@ -1,11 +1,12 @@
 #!/bin/bash
 
-while getopts 'c:r:e' d
+while getopts 'c:r:ei' d
 do
     case $d in
         c) rmfile="$OPTARG" ;;
         r) restore=$OPTARG ;;
         e) empty=true ;;
+        i) interactive=true ;;
     esac
 done
 
@@ -32,4 +33,16 @@ fi
 
 if [ "$empty" ]; then
     shred -u ~/trash/*
+fi
+
+if [ "$interactive" ]; then
+    echo "Are you sure you want to move to the trash (Yes|No)"
+    read ans
+    if [ $ans == "yes" ] || [ $ans == "y" ]; then
+         if [ ! -d "$trashpath" ]; then
+             mkdir -p $trashpath
+             chmod ugo+rwx $trashpath
+         fi
+         mv $2 $trashpath
+    fi
 fi
