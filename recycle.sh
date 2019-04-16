@@ -1,12 +1,13 @@
 #!/bin/bash
 
-while getopts 'c:r:ei' d
+while getopts 'c:r:eif' d
 do
     case $d in
         c) rmfile="$OPTARG" ;;
         r) restore=$OPTARG ;;
         e) empty=true ;;
         i) interactive=true ;;
+        f) force=true ;;
     esac
 done
 
@@ -32,7 +33,7 @@ if [ "$restore" ]; then
 fi
 
 if [ "$empty" ]; then
-    shred -u ~/trash/*
+    find ~/trash/ -mindepth 1 -delete
 fi
 
 if [ "$interactive" ]; then
@@ -45,4 +46,9 @@ if [ "$interactive" ]; then
          fi
          mv $2 $trashpath
     fi
+fi
+
+
+if [ "$force" ]; then
+    chmod +x $2
 fi
